@@ -3,7 +3,7 @@ import { getRandomInt } from '../helpers/utils.js';
 import createRandomJson from '../helpers/createRandomJson.js';
 
 
-function startWebSocketServer(wss) {
+function startWebSocketServer(wss, sendingInterval = 1000) {
 
   wss.on('connection', (ws) => {
     console.log('New client connected.');
@@ -18,10 +18,9 @@ function startWebSocketServer(wss) {
 
       const randomToken = createRandomJson();
 
-      console.log('Sending token---', randomToken.data.Token.id, randomToken.data.Token["bonding_progress"]);
       ws.send(JSON.stringify(randomToken));
 
-      const nextInterval = getRandomInt(4000, 4001); // 2 to 5 seconds
+      const nextInterval = getRandomInt(sendingInterval , sendingInterval + 1); // 2 to 5 seconds
       sendTokenTimeout = setTimeout(sendToken, nextInterval);
     };
 

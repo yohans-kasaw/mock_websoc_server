@@ -150,7 +150,6 @@ function generateRandomVariation() {
         signature:
           "28njrBbg3oUoo5YfA5geYBXD8zPnEXYnLQqtbP2wH4HwnhvG3GTUQVfZqVaiMTNHwxX6GN76qe3YEBVT5F8S5Ssf",
         token_address: "6JaSvZhXNaEKcdB9qQhVrxrRY1ALqzayyhB3kTv7pump",
-        created_at: "2024-11-23T13:19:07.852971534Z",
       },
       Socials: {
         id: "320195",
@@ -188,20 +187,22 @@ function generateRandomVariation() {
     "symbol",
     "signature",
     "token_address",
-    "created_at",
   ];
 
   // Determine number of fields to modify (2 or 3)
   const fieldsToModify = getRandomFields(modifiableFields, getRandomInt(2, 3));
 
-  token.id = getRandomInt(1, 100);
+  token.id = getRandomInt(1, 1000000);
 
   token["bonding_progress"] = getRandomFloat(0.3, 1) * 1000_000;
   token["total_volume"] = getRandomFloat(0, 1) * 10_000_000;
-  token["image_url"] = "https://picsum.photos/200?" + getRandomInt(1, 1000);
+  token["image_url"] = "https://picsum.photos/100/?" + getRandomInt(1, 1000);
 
   token["name"] = generateTokenName();
   token["ticker"] = generateTicker();
+  token["total_volume"] = getRandomFloat(0, 1) * 1000;
+  const date = new Date();
+  token["creation_time"] = date.toISOString();
 
   fieldsToModify.forEach((field) => {
     switch (field) {
@@ -222,10 +223,6 @@ function generateRandomVariation() {
         break;
       case "image_url":
         token.image_url = getRandomImageUrl();
-        break;
-      case "creation_time":
-      case "created_at":
-        token[field] = getRandomDate(token[field]);
         break;
       case "mint_authority":
       case "freeze_authority":
